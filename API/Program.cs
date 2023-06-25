@@ -1,5 +1,10 @@
+using System.Text;
 using API.Data;
+using API.Interface;
+using API.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,13 +24,29 @@ builder.Services.AddDbContext<DataContext>(opt =>
 {
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-var app = builder.Build();
 
 //CORS is a security mechanism that allows web browsers to make requests to a different domain than the one from which the resource originated.
 builder.Services.AddCors();
 
+// AddScoped is a method used to register a service with a scoped lifetime.
+// The scoped lifetime means that a new instance of the service will be created for each HTTP request, 
+// and that instance will be reused throughout the lifetime of that request.
+builder.Services.AddScoped<ITokenService, TokenService>();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>{
+    options.TokenValidationParameters = new TokenValidationParameters{
+     ValidateIssuerSigningKey = true,
+     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["TokenKey"])),
+     ValidateIssuer = false, 
+     ValidateAudience = false
+    };
+});
+var app = builder.Build();
 // Configure the HTTP request pipeline.
 app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 
