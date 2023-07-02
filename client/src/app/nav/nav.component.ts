@@ -13,19 +13,31 @@ export class NavComponent implements OnInit {
   constructor(private accountService: AccountService) { }
 
   ngOnInit(): void {
+    this.getCurrentUser();
   }
 
-  login(){
+  getCurrentUser() {
+    this.accountService.currentUser$.subscribe({
+      next: user => this.loggedIn = !!user,
+      error: error => console.log(error)
+    })
+  }
+
+  login() {
     this.accountService.login(this.model).subscribe({
       next: response => {
         console.log(response);
-        this.loggedIn= true;
+        this.loggedIn = true;
       },
       error: error => console.log(error)
     })
   }
 
-  logout(){
-    this.loggedIn= false;
+  /**
+   * TypeScript method logs out the current user by invoking the logout method of an accountService and setting the loggedIn property to false
+   */
+  logout() {
+    this.accountService.logout();
+    this.loggedIn = false;
   }
 }
