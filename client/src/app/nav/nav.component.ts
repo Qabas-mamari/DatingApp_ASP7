@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../_services/account.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav',
@@ -10,7 +11,7 @@ export class NavComponent implements OnInit {
   model: any = {};
   //loggedIn = false;
 
-  constructor(public accountService: AccountService) { }
+  constructor(public accountService: AccountService, private routes: Router) { }
 
   ngOnInit(): void {
   }
@@ -24,10 +25,11 @@ export class NavComponent implements OnInit {
 
   login() {
     this.accountService.login(this.model).subscribe({
-      next: response => {
-        console.log(response);
-       // this.loggedIn = true;
-      },
+      // next: response => {
+      //   console.log(response);
+      //  // this.loggedIn = true;
+      // },
+      next: _=> this.routes.navigateByUrl("/members"),
       error: error => console.log(error)
     })
   }
@@ -37,6 +39,7 @@ export class NavComponent implements OnInit {
    */
   logout() {
     this.accountService.logout();
+    this.routes.navigateByUrl("/");
    // this.loggedIn = false;
   }
 }
