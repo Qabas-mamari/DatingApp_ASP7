@@ -14,6 +14,7 @@ import { MemberDetailsComponent } from './members/member-details/member-details.
 import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
 import { ShardModule } from './_modules/shard.module';
+import { TestErrorComponent } from './errors/test-error/test-error.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { ShardModule } from './_modules/shard.module';
     MemberListComponent,
     MemberDetailsComponent,
     ListsComponent,
-    MessagesComponent
+    MessagesComponent,
+    TestErrorComponent
   ],
   imports: [
     BrowserAnimationsModule,
