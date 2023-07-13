@@ -37,7 +37,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                   }
                 }
                 //6. This allows the error to be caught by a higher-level error handler or intercepted by another interceptor.
-                throw modelStateErrors;
+                throw modelStateErrors.flat();
               } else {
                 // there are no model state errors.
                 this.toastr.error(error.error, error.status.toString());
