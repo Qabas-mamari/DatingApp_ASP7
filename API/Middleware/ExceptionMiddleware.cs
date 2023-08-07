@@ -45,7 +45,7 @@ namespace API.Middleware
                 // current hosting environment (_env).
                 var response = _env.IsDevelopment()
                 ? new ApiExceptions(context.Response.StatusCode, ex.Message, ex.StackTrace?.ToString()) //true = 'Development'
-                : new ApiExceptions(context.Response.StatusCode, ex.Message, "Internal Server Error"); //false = 'Production'
+                : new ApiExceptions(context.Response.StatusCode,  "Internal Server Error"); //false = 'Production'
 
                 // policy specifies that property names should be converted to camel case. 
                 // Camel case means that the first letter of the property name is lowercase, and the first letter of each subsequent concatenated word is capitalized. 

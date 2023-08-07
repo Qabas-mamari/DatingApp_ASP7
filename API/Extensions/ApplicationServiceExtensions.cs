@@ -1,6 +1,7 @@
 
 using API.Data;
 using API.Interface;
+using API.Interfaces;
 using API.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,6 +32,8 @@ namespace API.Extensions
             // The scoped lifetime means that a new instance of the service will be created for each HTTP request, 
             // and that instance will be reused throughout the lifetime of that request
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             return services;
         }

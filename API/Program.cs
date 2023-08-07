@@ -1,6 +1,7 @@
 using System.Text;
 using API.Data;
 using API.Interface;
+using API.Interfaces;
 using API.Middleware;
 using API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -33,6 +34,8 @@ builder.Services.AddCors();
 // The scoped lifetime means that a new instance of the service will be created for each HTTP request, 
 // and that instance will be reused throughout the lifetime of that request.
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>{
     options.TokenValidationParameters = new TokenValidationParameters{
