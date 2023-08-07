@@ -33,7 +33,8 @@ namespace API.Extensions
             // The scoped lifetime means that a new instance of the service will be created for each HTTP request, 
             // and that instance will be reused throughout the lifetime of that request
             services.AddScoped<ITokenService, TokenService>();
-
+            services.AddScoped<IUserRepository, UserRepository>();
+            
             return services;
         }
     }
